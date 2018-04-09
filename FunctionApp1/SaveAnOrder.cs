@@ -1,5 +1,3 @@
-
-using System;
 using System.Text;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
@@ -10,38 +8,15 @@ using Newtonsoft.Json;
 
 namespace FunctionApp1
 {
+    public class PostOrder
+    {
+        public string FileName { get; set; }
+        public string CustomerEmail { get; set; }
+        public int RequiredWidth { get; set; }
+        public int RequiredHeight { get; set; }
+    }
     public static class SaveAnOrder
     {
-        public class Order
-        {
-            public string PartitionKey { get; set; }
-            public string RowKey { get; set; }
-            public string FileName { get; set; }
-            public string CustomerEmail { get; set; }
-            public int RequiredWidth { get; set; }
-            public int RequiredHeight { get; set; }
-
-            public static Order From(PostOrder postedOrder)
-            {
-                return new Order()
-                {
-                    PartitionKey = "Order",
-                    RowKey = Guid.NewGuid().ToString(),
-                    FileName = postedOrder.FileName,
-                    CustomerEmail = postedOrder.CustomerEmail,
-                    RequiredHeight = postedOrder.RequiredHeight,
-                    RequiredWidth = postedOrder.RequiredWidth
-                };
-            }
-        }
-
-        public class PostOrder
-        {
-            public string FileName { get; set; }
-            public string CustomerEmail { get; set; }
-            public int RequiredWidth { get; set; }
-            public int RequiredHeight { get; set; }
-        }
 
         [FunctionName("SaveAnOrder")]
         [return: Table("Orders", Connection = "OrdersStorage")]
