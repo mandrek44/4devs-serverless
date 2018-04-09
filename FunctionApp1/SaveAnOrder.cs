@@ -44,7 +44,7 @@ namespace FunctionApp1
         }
 
         [FunctionName("SaveAnOrder")]
-        [return: Table("Orders")]
+        [return: Table("Orders", Connection = "OrdersStorage")]
         public static Order Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = "order")]HttpRequest req, TraceWriter log)
         {
             log.Info("SaveAnOrder: C# HTTP trigger function processed a request.");
