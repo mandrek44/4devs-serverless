@@ -13,7 +13,7 @@ namespace FunctionApp1
     {
         [FunctionName("RetrieveOrder")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get")]HttpRequest req, 
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "retrieveorder")]HttpRequest req, 
             [Table("Orders", Connection = "OrdersStorage")]CloudTable ordersTable,
             TraceWriter log)
         {
